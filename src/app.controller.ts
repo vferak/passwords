@@ -1,6 +1,16 @@
-import { Controller, Get, Render } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  HttpCode,
+  HttpStatus,
+  Post,
+  Render,
+  Res,
+} from '@nestjs/common';
 import { AppService } from './app.service';
 import { UserService } from './user/user.service';
+import { Response } from 'express';
 
 @Controller()
 export class AppController {
@@ -12,7 +22,30 @@ export class AppController {
   @Get()
   @Render('index')
   async showForm(): Promise<object> {
-    console.log(await this.userService.findUserByEmail('a@a.cz'));
     return { message: this.appService.getHello() };
+  }
+
+  @Post()
+  @HttpCode(HttpStatus.OK)
+  async validatePassword(
+    @Body() body: { email: string; password: string },
+    @Res({ passthrough: true }) response: Response,
+  ): Promise<object> {
+    const user = await this.userService.findUserByEmail(body.email);
+
+    if (user === null) {
+      response.status(HttpStatus.BAD_REQUEST);
+      return {};
+    }
+
+    const isPasswordValid = this.userService.isPasswordValidForUser(
+      user,
+      body.password,
+    );
+
+    if (!isPasswordValid) {
+      response.status(HttpStatus.BAD_REQUEST);
+      return {};
+    }
   }
 }

@@ -3,12 +3,20 @@ import { v4 } from 'uuid';
 
 @Entity()
 export class User {
-  @PrimaryKey()
-  private uuid: string = v4();
+  @PrimaryKey({ name: 'uuid' })
+  private _uuid: string = v4();
 
-  @Property()
-  private email!: string;
+  @Property({ name: 'email' })
+  private _email!: string;
 
-  @Property()
-  private password!: string;
+  @Property({ name: 'password' })
+  private _password!: string;
+
+  get email(): string {
+    return this._email;
+  }
+
+  get password(): string {
+    return this._password;
+  }
 }
