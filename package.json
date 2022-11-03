@@ -21,6 +21,10 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
+    "@mikro-orm/cli": "^5.5.0",
+    "@mikro-orm/core": "^5.5.0",
+    "@mikro-orm/nestjs": "^5.1.2",
+    "@mikro-orm/sqlite": "^5.5.0",
     "@nestjs/common": "^9.0.0",
     "@nestjs/core": "^9.0.0",
     "@nestjs/platform-express": "^9.0.0",
