@@ -1,19 +1,15 @@
 import { Entity, PrimaryKey, Property } from '@mikro-orm/core';
-import { v4 } from 'uuid';
 
 @Entity()
 export class User {
-  @PrimaryKey({ name: 'uuid' })
-  private _uuid: string = v4();
-
-  @Property({ name: 'email' })
-  private _email!: string;
+  @PrimaryKey({ name: 'id' })
+  private _id!: number;
 
   @Property({ name: 'password' })
   private _password!: string;
 
-  get email(): string {
-    return this._email;
+  get id(): number {
+    return this._id;
   }
 
   get password(): string {

@@ -12,8 +12,8 @@ export class UserService {
     private readonly passwordService: PasswordService,
   ) {}
 
-  async findUserByEmail(email: string): Promise<User> {
-    return await this.userRepository.findOne({ email: email });
+  async findUserById(id: number): Promise<User> {
+    return await this.userRepository.findOne({ id: id });
   }
 
   isPasswordValidForUser(user: User, password: string): boolean {
