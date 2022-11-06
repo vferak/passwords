@@ -57,6 +57,8 @@ const ajaxAttackAction = async function () {
 
   const baseN = getBaseNForUserId(formData.id);
 
+  const start = new Date();
+
   for (const permutation of baseN) {
     formData.password = permutation.join('');
 
@@ -69,12 +71,18 @@ const ajaxAttackAction = async function () {
 
     resultElement.innerHTML = `KO - ${formData.password}`;
   }
+
+  const end = new Date();
+
+  console.log((end - start) / 1000);
 };
 
 const serverAttackAction = async function () {
   const formData = getFormData();
 
   const resultElement = document.querySelector('.js-form-result');
+
+  const start = new Date();
 
   resultElement.innerHTML = `KO - (attacking...)`;
 
@@ -85,6 +93,10 @@ const serverAttackAction = async function () {
     },
     body: JSON.stringify(formData),
   });
+
+  const end = new Date();
+
+  console.log((end - start) / 1000);
 
   if (response.status !== 200) {
     resultElement.innerHTML = `KO`;

@@ -71,6 +71,7 @@ export class AppController {
 
     for (const permutation of baseN) {
       const password = permutation.join('');
+      console.log(password);
 
       const data = { id: body.id, password: password };
       try {

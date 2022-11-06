@@ -5,8 +5,7 @@ import { BaseN } from 'js-combinatorics';
 export class CombinatoricsService {
   private static readonly NUMBERS = '123456789';
   private static readonly CHARACTERS = 'abcdefghijklmnopqrstuvwxyz';
-  private static readonly SPECIAL_CHARACTERS =
-    '/*-+.<>,.?;:\\\'"|[{]}_=`~!@#$%^&()';
+  private static readonly SPECIAL_CHARACTERS = '/*-+<>,.?;:=!@#$%^&';
 
   getBaseNForUserId(userId: string): BaseN<string> {
     if (userId === '1') {
