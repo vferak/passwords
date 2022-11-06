@@ -12,6 +12,10 @@ export class UserService {
     private readonly passwordService: PasswordService,
   ) {}
 
+  async findAll(): Promise<User[]> {
+    return await this.userRepository.findAll();
+  }
+
   async findUserById(id: number): Promise<User> {
     return await this.userRepository.findOne({ id: id });
   }

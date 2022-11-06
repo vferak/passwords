@@ -8,25 +8,28 @@ import {
   Render,
   Res,
 } from '@nestjs/common';
-import { AppService } from './app.service';
 import { UserService } from './user/user.service';
 import { Response } from 'express';
-import { BaseN } from 'js-combinatorics';
 import { HttpService } from '@nestjs/axios';
 import { firstValueFrom } from 'rxjs';
+import { CombinatoricsService } from './common/providers/combinatorics.service';
 
 @Controller()
 export class AppController {
   constructor(
-    private readonly appService: AppService,
     private readonly userService: UserService,
     private readonly httpService: HttpService,
+    private readonly combinatoricsService: CombinatoricsService,
   ) {}
 
   @Get()
   @Render('index')
   async showForm(): Promise<object> {
-    return { message: this.appService.getHello() };
+    const users = await this.userService.findAll();
+
+    return {
+      users: users.map((user) => ({ id: user.id, name: user.name })),
+    };
   }
 
   @Post()
@@ -64,9 +67,10 @@ export class AppController {
     @Body() body: { id: string },
     @Res({ passthrough: true }) response: Response,
   ): Promise<object> {
-    for (const permutation of new BaseN('123456789', 4)) {
+    const baseN = this.combinatoricsService.getBaseNForUserId(body.id);
+
+    for (const permutation of baseN) {
       const password = permutation.join('');
-      console.log(password);
 
       const data = { id: body.id, password: password };
       try {

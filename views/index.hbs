@@ -1,24 +1,24 @@
 <!DOCTYPE html>
 <html lang="cs">
 <head>
-  <meta charset="utf-8" />
-  <title>App</title>
+    <meta charset="utf-8"/>
+    <title>App</title>
 </head>
 <body>
-  <form class="js-password-form">
-    <label>
-      ID
-      <input type="text" name="id">
-    </label>
-    <label>
-      Password
-      <input type="password" name="password">
-    </label>
-  </form>
-  <button class="js-send">Send</button>
-  <button class="js-ajax-attack">Ajax Attack</button>
-  <button class="js-server-attack">Server Attack</button>
-  <div class="js-form-result"></div>
+<form class="js-password-form">
+    <label for="users">ID</label>
+    <select name="id" id="users">
+        {{#each users}}
+            <option value="{{ this.id }}">{{ this.name }}</option>
+        {{/each}}
+    </select>
+    <label for="password">Password</label>
+    <input type="password" name="password" id="password">
+</form>
+<button class="js-send">Send</button>
+<button class="js-ajax-attack">Ajax Attack</button>
+<button class="js-server-attack">Server Attack</button>
+<div class="js-form-result"></div>
 </body>
 <script type="module" src="/js/index.js"></script>
 </html>

