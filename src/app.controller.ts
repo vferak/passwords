@@ -13,6 +13,7 @@ import { Response } from 'express';
 import { HttpService } from '@nestjs/axios';
 import { firstValueFrom } from 'rxjs';
 import { CombinatoricsService } from './common/providers/combinatorics.service';
+import { SkipThrottle } from '@nestjs/throttler';
 
 @Controller()
 export class AppController {
@@ -33,6 +34,7 @@ export class AppController {
   }
 
   @Post()
+  // @SkipThrottle() // Uncomment to turn off rate limiting.
   @HttpCode(HttpStatus.OK)
   async validatePassword(
     @Body() body: { id: string; password: string },
